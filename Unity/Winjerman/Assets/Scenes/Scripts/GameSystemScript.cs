@@ -45,7 +45,7 @@ public class GameSystemScript : MonoBehaviour
         {
             case listeChoix.HUMAN:
 
-                agentJ1 = new HumanPlayerAgent();
+                agentJ1 = new HumanPlayerAgent(0);
                 break;
 
             case listeChoix.RANDOM:
@@ -78,7 +78,7 @@ public class GameSystemScript : MonoBehaviour
         {
             case listeChoix.HUMAN:
 
-                agentJ2 = new HumanPlayerAgent();
+                agentJ2 = new HumanPlayerAgent(1);
                 break;
 
             case listeChoix.RANDOM:
@@ -123,6 +123,6 @@ public class GameSystemScript : MonoBehaviour
         PlayerView1.position = gs.playerPosition1;
         PlayerView2.position = gs.playerPosition2;
         frisbeeView.position = gs.frisbeePosition;
-        Rules.Step(ref gs, agentJ1.Act(ref gs, Rules.GetAvailableActions1(ref gs), 99), agentJ2.Act(ref gs, Rules.GetAvailableActions2(ref gs), 99));
+        Rules.Step(ref gs, agentJ1.Act(ref gs, Rules.GetAvailableActions1(ref gs)), agentJ2.Act(ref gs, Rules.GetAvailableActions2(ref gs)));
     }
 }
