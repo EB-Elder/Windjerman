@@ -22,7 +22,7 @@ public class GameSystemScript : MonoBehaviour
         PlayerView1 = Instantiate(PlayerPrefab1).GetComponent<Transform>();
         PlayerView2 = Instantiate(PlayerPrefab2).GetComponent<Transform>();
         frisbeeView = Instantiate(FrisbeePrefab).GetComponent<Transform>();
-        agent = new HumanPlayerAgent();
+        agent = new RandomAgent();
     }
 
     // Update is called once per frame
@@ -37,6 +37,6 @@ public class GameSystemScript : MonoBehaviour
         PlayerView2.position = gs.playerPosition2;
         frisbeeView.position = gs.frisbeePosition;
         
-        Rules.Step(ref gs, agent.Act(ref gs, Rules.GetAvailableActions(ref gs)), agent.Act(ref gs, Rules.GetAvailableActions(ref gs)));
+        Rules.Step(ref gs, agent.Act(ref gs, Rules.GetAvailableActions1(ref gs)), agent.Act(ref gs, Rules.GetAvailableActions2(ref gs)));
     }
 }

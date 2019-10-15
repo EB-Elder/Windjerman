@@ -59,6 +59,11 @@ public static class WindjermanGameStateRules
               {
                      gs.isFreeze2 = true;
               }
+
+              if (gs.frisbeePosition.y > 2 || gs.frisbeePosition.y < -2)
+              {
+                     gs.frisbeeSpeed = new Vector2(gs.frisbeeSpeed.x, -gs.frisbeeSpeed.y);
+              }
               //TODO: Cage à faire !! 
               
        }
@@ -69,7 +74,7 @@ public static class WindjermanGameStateRules
               switch (chosenPlayerAction1)
               {
                      case 0: // DO NOTHING
-                            return;
+                            break;
                      case 1: // LEFT
                      {
                             if (!gs.isFreeze1)
@@ -139,6 +144,7 @@ public static class WindjermanGameStateRules
                             if (gs.isFreeze1)
                             {
                                    gs.frisbeeSpeed = new Vector2(1f, -1f);
+                                   gs.isFreeze1 = false;
                             }
                             break;
                      }
@@ -147,6 +153,7 @@ public static class WindjermanGameStateRules
                             if (gs.isFreeze1)
                             {
                                    gs.frisbeeSpeed = new Vector2(1f, 0f);
+                                   gs.isFreeze1 = false;
                             }
                             break;
                      }
@@ -155,6 +162,7 @@ public static class WindjermanGameStateRules
                             if (gs.isFreeze1)
                             {
                                    gs.frisbeeSpeed = new Vector2(1f, 1f);
+                                   gs.isFreeze1 = false;
                             }
                             break;
                      }
@@ -167,7 +175,7 @@ public static class WindjermanGameStateRules
               switch (chosenPlayerAction2)
               {
                      case 0: // DO NOTHING
-                            return;
+                            break;
                      case 1: // LEFT
                      {
                             gs.playerPosition2 += Vector2.left * WindjermanGameState.playerSpeed;
@@ -213,6 +221,7 @@ public static class WindjermanGameStateRules
                             if (gs.isFreeze2)
                             {
                                    gs.frisbeeSpeed = new Vector2(-1f, -1f);
+                                   gs.isFreeze2 = false;
                             }
                             break;
                      }
@@ -221,6 +230,7 @@ public static class WindjermanGameStateRules
                             if (gs.isFreeze2)
                             {
                                    gs.frisbeeSpeed = new Vector2(-1f, 0f);
+                                   gs.isFreeze2 = false;
                             }
                             break;
                      }
@@ -229,19 +239,54 @@ public static class WindjermanGameStateRules
                             if (gs.isFreeze2)
                             {
                                    gs.frisbeeSpeed = new Vector2(-1f, 1f);
+                                   gs.isFreeze2 = false;
                             }
                             break;
                      }
               }
        }
        
-       private static readonly int[] AvailableActions = new[]
+       private static readonly int[] AvailableActionsFree = new[]
        {
               0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
        };
-
-       public static int[] GetAvailableActions(ref WindjermanGameState gs)
+       
+       private static readonly int[] AvailableActionsFrozen = new[]
        {
-              return AvailableActions;
+              0, 9, 10, 11
+       };
+       
+       private static readonly int[] AvailableActionsStun = new[]
+       {
+              0
+       };
+
+       public static int[] GetAvailableActions1(ref WindjermanGameState gs)
+       {
+              if (gs.isFreeze1)
+              {
+                     return AvailableActionsFrozen;
+              }
+              if (gs.isStun1)
+              {
+                     return AvailableActionsStun;
+              }
+
+              return AvailableActionsFree;
+
+       }
+       
+       public static int[] GetAvailableActions2(ref WindjermanGameState gs)
+       {
+              if (gs.isFreeze2)
+              {
+                     return AvailableActionsFrozen;
+              }
+              if (gs.isStun2)
+              {
+                     return AvailableActionsStun;
+              }
+
+              return AvailableActionsFree;
        }
 }
