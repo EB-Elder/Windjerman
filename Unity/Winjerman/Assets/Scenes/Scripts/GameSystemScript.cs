@@ -14,7 +14,10 @@ public class GameSystemScript : MonoBehaviour
     private Transform PlayerView1;
     private Transform PlayerView2;
 
-    private IAgent agent;
+    private IAgent agent1;
+    private IAgent agent2;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,11 @@ public class GameSystemScript : MonoBehaviour
         PlayerView1 = Instantiate(PlayerPrefab1).GetComponent<Transform>();
         PlayerView2 = Instantiate(PlayerPrefab2).GetComponent<Transform>();
         frisbeeView = Instantiate(FrisbeePrefab).GetComponent<Transform>();
-        agent = new HumanPlayerAgent();
+        //PlayerID 0 => Joueur 1
+        //PlayerID 1 => Joueur 2
+        agent1 = new HumanPlayerAgent(0);
+        agent2 = new RandomAgent();
+        
     }
 
     // Update is called once per frame
@@ -36,6 +43,6 @@ public class GameSystemScript : MonoBehaviour
         PlayerView1.position = gs.playerPosition1;
         PlayerView2.position = gs.playerPosition2;
         frisbeeView.position = gs.frisbeePosition;
-        Rules.Step(ref gs, agent.Act(ref gs, Rules.GetAvailableActions1(ref gs), 99), agent.Act(ref gs, Rules.GetAvailableActions2(ref gs), 99));
+        Rules.Step(ref gs, agent1.Act(ref gs, Rules.GetAvailableActions1(ref gs)), agent2.Act(ref gs, Rules.GetAvailableActions2(ref gs)));
     }
 }

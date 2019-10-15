@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class HumanPlayerAgent : IAgent
 {
-    public int Act(ref WindjermanGameState gs, int[] availableActions, int PlayerID)
+    private int PlayerID;
+
+    public HumanPlayerAgent(int PlayerID)
+    {
+        this.PlayerID = PlayerID;
+    }
+    public int Act(ref WindjermanGameState gs, int[] availableActions)
     {
         
         if (Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
