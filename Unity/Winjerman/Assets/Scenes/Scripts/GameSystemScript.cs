@@ -27,7 +27,7 @@ public class GameSystemScript : MonoBehaviour
         frisbeeView = Instantiate(FrisbeePrefab).GetComponent<Transform>();
         //PlayerID 0 => Joueur 1
         //PlayerID 1 => Joueur 2
-        agent1 = new HumanPlayerAgent(0);
+        agent1 = new HumanPlayerAgent(1);
         agent2 = new RandomAgent();
         
     }
