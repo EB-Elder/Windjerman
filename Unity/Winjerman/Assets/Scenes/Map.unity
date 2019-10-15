@@ -870,6 +870,7 @@ MonoBehaviour:
   vs: {fileID: 1491654819}
   finDePartie: {fileID: 442643638}
   bouttonquitter: {fileID: 18488921}
+  gameSystem: {fileID: 341060057}
 --- !u!4 &1889283108
 Transform:
   m_ObjectHideFlags: 0
