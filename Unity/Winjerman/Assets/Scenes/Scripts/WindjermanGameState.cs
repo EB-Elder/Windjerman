@@ -22,8 +22,6 @@ public struct WindjermanGameState
     public Vector2 frisbeePosition;
     public bool frisbeeFrozen;
     public bool isGameOver;
-    public long lastShootStep;
-    public long currentGameStep;
     public int playerScore1;
     public int playerScore2;
     public bool isFreeze1; //Il a le Frisbee

@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -34,7 +34,7 @@ public class RandomRolloutAgent : IAgent
                     var currentDepth = 0;
                     while (!gsCopy.isGameOver)
                     {
-                        Rules.Step(ref gsCopy, agent.Act(ref gsCopy, Rules.GetAvailableActions1(ref gsCopy), 99), 0);
+                        Rules.Step(ref gsCopy, agent.Act(ref gsCopy, Rules.GetAvailableActions1(ref gsCopy)), 0);
                         currentDepth++;
                         if (currentDepth > 500)
                         {
@@ -60,7 +60,7 @@ public class RandomRolloutAgent : IAgent
                     var currentDepth = 0;
                     while (!gsCopy.isGameOver)
                     {
-                        Rules.Step(ref gsCopy, 0, agent.Act(ref gsCopy, Rules.GetAvailableActions1(ref gsCopy), 99));
+                        Rules.Step(ref gsCopy, 0, agent.Act(ref gsCopy, Rules.GetAvailableActions1(ref gsCopy)));
                         currentDepth++;
                         if (currentDepth > 500)
                         {
@@ -91,4 +91,6 @@ public class RandomRolloutAgent : IAgent
 
         return availableActions[bestActionIndex];
     }
-}*/
+    
+    
+}

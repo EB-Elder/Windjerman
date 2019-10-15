@@ -35,7 +35,6 @@ public static class WindjermanGameStateRules
               HandleAgentInputs1(ref gs, chosenPlayerAction1);
               HandleAgentInputs2(ref gs, chosenPlayerAction2);
               HandleCollisions(ref gs);
-              gs.currentGameStep += 1;
        }
 
 
@@ -90,7 +89,7 @@ public static class WindjermanGameStateRules
                      gs.playerPosition2 = new Vector2(5f,0f);
                      gs.frisbeeSpeed = new Vector2(0,0);
                      gs.frisbeePosition = new Vector2(5f, 0);
-                     Debug.Log("Victoire Rouge");
+                     gs.playerScore1 += 1;
 
               }
 
@@ -100,7 +99,7 @@ public static class WindjermanGameStateRules
                      gs.playerPosition2 = new Vector2(5f,0f);
                      gs.frisbeeSpeed = new Vector2(0,0);
                      gs.frisbeePosition = new Vector2(-5f, 0);
-                     Debug.Log("Victoire Bleu");
+                     gs.playerScore2 += 1;
               }
 
               
@@ -328,10 +327,23 @@ public static class WindjermanGameStateRules
               return AvailableActionsFree;
        }
 
-       /*public static WindjermanGameState Clone(ref WindjermanGameState gs)
+       public static WindjermanGameState Clone(ref WindjermanGameState gs)
        {
-              WindjermanGameState gsCopy ;
+              WindjermanGameState gsCopy = new WindjermanGameState();
+              gsCopy.frisbeeSpeed = gs.frisbeeSpeed;
+              gsCopy.Timer = gs.Timer;
+              gsCopy.playerPosition1 = gs.playerPosition1;
+              gsCopy.playerPosition2 = gs.playerPosition2;
+              gsCopy.frisbeePosition = gs.frisbeePosition;
+              gsCopy.frisbeeFrozen = gs.frisbeeFrozen;
+              gsCopy.isGameOver = gs.isGameOver;
+              gsCopy.playerScore1 = gs.playerScore1;
+              gsCopy.playerScore2 = gs.playerScore2;
+              gsCopy.isFreeze1 = gs.isFreeze1;
+              gsCopy.isFreeze2 = gs.isFreeze2;
+              gsCopy.isStun1 = gs.isStun1;
+              gsCopy.isStun2 = gs.isStun2;
 
-              return;
-       }*/
+              return gsCopy;
+       }
 }

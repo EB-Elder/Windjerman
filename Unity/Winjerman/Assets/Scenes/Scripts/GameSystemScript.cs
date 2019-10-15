@@ -8,6 +8,8 @@ public class GameSystemScript : MonoBehaviour
     public GameObject PlayerPrefab2;
     public GameObject FrisbeePrefab;
 
+    public InterfaceManagerScript IMS;
+
     private WindjermanGameState gs;
 
     private Transform frisbeeView;
@@ -55,7 +57,7 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.RANDOMROLLOUT:
 
-                Debug.Log("Agent pas implémenté");
+                agentJ1 = new RandomRolloutAgent(0);
                 break;
 
             case listeChoix.MCTS:
@@ -88,7 +90,7 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.RANDOMROLLOUT:
 
-                Debug.Log("Agent pas implémenté");
+                agentJ2 = new RandomRolloutAgent(1);
                 break;
 
             case listeChoix.MCTS:
@@ -119,7 +121,13 @@ public class GameSystemScript : MonoBehaviour
         }
 
         if (!gameStarted) return;
-
+        
+        IMS.UpdateScore(gs.playerScore1, gs.playerScore2);
+        if (gs.playerScore1 >= 3 || gs.playerScore2 >= 3)
+        {
+            IMS.FinDePartie();
+            gs.isGameOver = true;
+        }
         PlayerView1.position = gs.playerPosition1;
         PlayerView2.position = gs.playerPosition2;
         frisbeeView.position = gs.frisbeePosition;
