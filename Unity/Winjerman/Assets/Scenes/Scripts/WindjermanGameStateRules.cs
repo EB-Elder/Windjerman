@@ -19,35 +19,19 @@ public static class WindjermanGameStateRules
               gs.playerPosition1 = new Vector2(-5f,0f);
               gs.playerPosition2 = new Vector2(5f,0f);
               gs.isGameOver = false;
-              gs.Frisbee = new Frisbee()
-              {
-                     position = new Vector2(-4f, 0),
-                     speed = new Vector2(0f,0f)
-              };
-              gs.player1 = new Player()
-              {
-                     isFreeze = true,
-                     isStun = false,
-                     position = new Vector2(-5f, 0f),
-                     speed = new Vector2(0f,0f)
-              };
-              gs.player2 = new Player()
-              {
-                     isFreeze = false,
-                     isStun = false,
-                     position = new Vector2(5f, 0f),
-                     speed = new Vector2(0f,0f)
-              };
+              
+              
        }
        
-       public static void Step(ref WindjermanGameState gs, int chosenPlayerAction)
+       public static void Step(ref WindjermanGameState gs, int chosenPlayerAction1, int chosenPlayerAction2)
        {
               if (gs.isGameOver)
               {
                      throw new Exception("YOU SHOULD NOT TRY TO UPDATE GAME STATE WHEN GAME IS OVER !!!");
               }
               UpdateFrisbee(ref gs);
-              //HandleAgentInputs(ref gs, chosenPlayerAction);
+              HandleAgentInputs1(ref gs, chosenPlayerAction1);
+              HandleAgentInputs2(ref gs, chosenPlayerAction2);
               HandleCollisions(ref gs);
               gs.currentGameStep += 1;
        }
@@ -55,13 +39,13 @@ public static class WindjermanGameStateRules
 
        public static void UpdateFrisbee(ref WindjermanGameState gs)
        {
-              gs.Frisbee.position += gs.Frisbee.speed;
+              gs.frisbeePosition += gs.frisbeeSpeed;
        }
 
        public static void HandleCollisions(ref WindjermanGameState gs)
        {
-              var sqrDistance1 = (gs.Frisbee.position - gs.playerPosition1).sqrMagnitude;
-              var sqrDistance2 = (gs.Frisbee.position - gs.playerPosition2).sqrMagnitude;
+              var sqrDistance1 = (gs.frisbeePosition - gs.playerPosition1).sqrMagnitude;
+              var sqrDistance2 = (gs.frisbeePosition - gs.playerPosition2).sqrMagnitude;
               
               if ((sqrDistance1
                     <= Mathf.Pow( WindjermanGameState.frisbeeRadius+ WindjermanGameState.playerRadius,
@@ -80,128 +64,184 @@ public static class WindjermanGameStateRules
        }
 
 
-       static void HandleAgentInputs(ref WindjermanGameState gs, int chosenPlayerAction, int playerId)
+       static void HandleAgentInputs1(ref WindjermanGameState gs, int chosenPlayerAction1)
        {
-              if (playerId == 1)
+              switch (chosenPlayerAction1)
               {
-                     switch (chosenPlayerAction)
+                     case 0: // DO NOTHING
+                            return;
+                     case 1: // LEFT
                      {
-                            case 0: // DO NOTHING
-                                   return;
-                            case 1: // LEFT
+                            if (!gs.isFreeze1)
                             {
-                                   gs.playerPosition1 += Vector2.left * WindjermanGameState.playerSpeed;
-                                   break;
+                                   gs.playerPosition1 += Vector2.left * WindjermanGameState.playerSpeed;                                   
                             }
-                            case 2: // RIGHT
+                            break;
+                     }
+                     case 2: // RIGHT
+                     {
+                            if (!gs.isFreeze1)
                             {
                                    gs.playerPosition1 += Vector2.right * WindjermanGameState.playerSpeed;
-                                   break;
                             }
-                            case 3: // UP
-                            {
-                                   gs.playerPosition1 += Vector2.up * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 4: // DOWN
-                            {
-                                   gs.playerPosition1 += Vector2.down * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 5: // UP LEFT
-                            {
-                                   gs.playerPosition1 += Vector2.left * Vector2.up * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 6: // UP RIGHT
-                            {
-                                   gs.playerPosition1 += Vector2.right * Vector2.up * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 7: // DOWN LEFT
-                            {
-                                   gs.playerPosition1 += Vector2.left * Vector2.down * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 8: // DOWN RIGHT
-                            {
-                                   gs.playerPosition1 += Vector2.right * Vector2.down * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 9: //SHOOT DOWN
-                            {
-                                   break;
-                            }
-                            case 10: // SHOOT STRAIGHT
-                            {
-                                   break;
-                            }
-                            case 11: // SHOOT UP
-                            {
-                                   break;
-                            }
+                            break;
                      }
-              }
-              else if (playerId == 2)
-              {
-                     switch (chosenPlayerAction)
+                     case 3: // UP
                      {
-                            case 0: // DO NOTHING
-                                   return;
-                            case 1: // LEFT
+                            if (!gs.isFreeze1)
                             {
-                                   gs.playerPosition2 += Vector2.left * WindjermanGameState.playerSpeed;
-                                   break;
+                                   gs.playerPosition1 += Vector2.up * WindjermanGameState.playerSpeed;                                   
                             }
-                            case 2: // RIGHT
-                            {
-                                   gs.playerPosition2 += Vector2.right * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 3: // UP
-                            {
-                                   gs.playerPosition2 += Vector2.up * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 4: // DOWN
-                            {
-                                   gs.playerPosition2 += Vector2.down * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 5: // UP LEFT
-                            {
-                                   gs.playerPosition2 += Vector2.left * Vector2.up * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 6: // UP RIGHT
-                            {
-                                   gs.playerPosition2 += Vector2.right * Vector2.up * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 7: // DOWN LEFT
-                            {
-                                   gs.playerPosition2 += Vector2.left * Vector2.down * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 8: // DOWN RIGHT
-                            {
-                                   gs.playerPosition2 += Vector2.right * Vector2.down * WindjermanGameState.playerSpeed;
-                                   break;
-                            }
-                            case 9: //SHOOT DOWN
-                            {
-                                   break;
-                            }
-                            case 10: // SHOOT STRAIGHT
-                            {
-                                   break;
-                            }
-                            case 11: // SHOOT UP
-                            {
-                                   break;
-                            }
+                            break;
                      }
-
+                     case 4: // DOWN
+                     {
+                            if (!gs.isFreeze1)
+                            {
+                                   gs.playerPosition1 += Vector2.down * WindjermanGameState.playerSpeed;                                   
+                            }
+                            break;
+                     }
+                     case 5: // UP LEFT
+                     {
+                            if (!gs.isFreeze1)
+                            {
+                                   gs.playerPosition1 += Vector2.left * Vector2.up * WindjermanGameState.playerSpeed;                                   
+                            }
+                            break;
+                     }
+                     case 6: // UP RIGHT
+                     {
+                            if (!gs.isFreeze1)
+                            {      
+                                   gs.playerPosition1 += Vector2.right * Vector2.up * WindjermanGameState.playerSpeed;                                   
+                            }
+                            break;
+                     }
+                     case 7: // DOWN LEFT
+                     {
+                            if (!gs.isFreeze1)
+                            {
+                                   gs.playerPosition1 += Vector2.left * Vector2.down * WindjermanGameState.playerSpeed;                                   
+                            }
+                            break;
+                     }
+                     case 8: // DOWN RIGHT
+                     {
+                            if (!gs.isFreeze1)
+                            {
+                                   gs.playerPosition1 += Vector2.right * Vector2.down * WindjermanGameState.playerSpeed;                                   
+                            }
+                            break;
+                     }
+                     case 9: //SHOOT DOWN
+                     {
+                            if (gs.isFreeze1)
+                            {
+                                   gs.frisbeeSpeed = new Vector2(1f, -1f);
+                            }
+                            break;
+                     }
+                     case 10: // SHOOT STRAIGHT
+                     {
+                            if (gs.isFreeze1)
+                            {
+                                   gs.frisbeeSpeed = new Vector2(1f, 0f);
+                            }
+                            break;
+                     }
+                     case 11: // SHOOT UP
+                     {
+                            if (gs.isFreeze1)
+                            {
+                                   gs.frisbeeSpeed = new Vector2(1f, 1f);
+                            }
+                            break;
+                     }
               }
+       }
+       
+       
+       static void HandleAgentInputs2(ref WindjermanGameState gs, int chosenPlayerAction2)
+       {
+              switch (chosenPlayerAction2)
+              {
+                     case 0: // DO NOTHING
+                            return;
+                     case 1: // LEFT
+                     {
+                            gs.playerPosition2 += Vector2.left * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 2: // RIGHT
+                     {
+                            gs.playerPosition2 += Vector2.right * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 3: // UP
+                     {
+                            gs.playerPosition2 += Vector2.up * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 4: // DOWN
+                     {
+                            gs.playerPosition2 += Vector2.down * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 5: // UP LEFT
+                     {
+                            gs.playerPosition2 += Vector2.left * Vector2.up * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 6: // UP RIGHT
+                     {
+                            gs.playerPosition2 += Vector2.right * Vector2.up * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 7: // DOWN LEFT
+                     {
+                            gs.playerPosition2 += Vector2.left * Vector2.down * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 8: // DOWN RIGHT
+                     {
+                            gs.playerPosition2 += Vector2.right * Vector2.down * WindjermanGameState.playerSpeed;
+                            break;
+                     }
+                     case 9: //SHOOT DOWN
+                     {
+                            if (gs.isFreeze2)
+                            {
+                                   gs.frisbeeSpeed = new Vector2(-1f, -1f);
+                            }
+                            break;
+                     }
+                     case 10: // SHOOT STRAIGHT
+                     {
+                            if (gs.isFreeze2)
+                            {
+                                   gs.frisbeeSpeed = new Vector2(-1f, 0f);
+                            }
+                            break;
+                     }
+                     case 11: // SHOOT UP
+                     {
+                            if (gs.isFreeze2)
+                            {
+                                   gs.frisbeeSpeed = new Vector2(-1f, 1f);
+                            }
+                            break;
+                     }
+              }
+       }
+       
+       private static readonly int[] AvailableActions = new[]
+       {
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+       };
+
+       public static int[] GetAvailableActions(ref WindjermanGameState gs)
+       {
+              return AvailableActions;
        }
 }
