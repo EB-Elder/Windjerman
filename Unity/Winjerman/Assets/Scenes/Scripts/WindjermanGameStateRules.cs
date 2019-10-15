@@ -89,7 +89,7 @@ public static class WindjermanGameStateRules
                      gs.playerPosition1 = new Vector2(-5f,0f);
                      gs.playerPosition2 = new Vector2(5f,0f);
                      gs.frisbeeSpeed = new Vector2(0,0);
-                     gs.frisbeePosition = new Vector2(-5f, 0);
+                     gs.frisbeePosition = new Vector2(5f, 0);
                      Debug.Log("Victoire Rouge");
 
               }
