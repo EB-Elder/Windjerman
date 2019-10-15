@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HumanPlayerAgent : IAgent
 {
-    public int Act(ref WindjermanGameState gs, int[] availableActions)
+    public int Act(ref WindjermanGameState gs, int[] availableActions, int PlayerID)
     {
         
         if (Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))

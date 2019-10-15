@@ -36,7 +36,6 @@ public class GameSystemScript : MonoBehaviour
         PlayerView1.position = gs.playerPosition1;
         PlayerView2.position = gs.playerPosition2;
         frisbeeView.position = gs.frisbeePosition;
-        
-        Rules.Step(ref gs, agent.Act(ref gs, Rules.GetAvailableActions1(ref gs)), agent.Act(ref gs, Rules.GetAvailableActions2(ref gs)));
+        Rules.Step(ref gs, agent.Act(ref gs, Rules.GetAvailableActions1(ref gs), 99), agent.Act(ref gs, Rules.GetAvailableActions2(ref gs), 99));
     }
 }
