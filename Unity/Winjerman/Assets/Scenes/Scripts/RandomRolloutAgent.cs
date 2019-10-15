@@ -8,7 +8,12 @@ using Rules = WindjermanGameStateRules;
 
 public class RandomRolloutAgent : IAgent
 {
-    public int Act(ref WindjermanGameState gs, int[] availableActions, int PlayerID)
+    private int PlayerID;
+    public RandomRolloutAgent(int PlayerID)
+    {
+        this.PlayerID = PlayerID;
+    }
+    public int Act(ref WindjermanGameState gs, int[] availableActions)
     {
         var epochs = 10;
         var agent = new RandomAgent();
@@ -86,5 +91,4 @@ public class RandomRolloutAgent : IAgent
 
         return availableActions[bestActionIndex];
     }
-}
-*/
+}*/
