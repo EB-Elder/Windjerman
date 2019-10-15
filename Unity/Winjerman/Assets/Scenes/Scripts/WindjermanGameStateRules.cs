@@ -6,11 +6,13 @@ using UnityEngine;
 
 public static class WindjermanGameStateRules
 {
+       
        public static void Init(ref WindjermanGameState gs)
        {
               gs.Timer = 0f;
               gs.isFreeze1 = true;
               gs.isFreeze2 = false;
+              gs.frisbeeFrozen = false;
               gs.isStun1 = false;
               gs.isStun2 = false;
               gs.frisbeePosition = new Vector2(-4f, 0);
@@ -39,7 +41,14 @@ public static class WindjermanGameStateRules
 
        public static void UpdateFrisbee(ref WindjermanGameState gs)
        {
+              Debug.Log(gs.frisbeeFrozen);
+              if (gs.frisbeeFrozen)
+              {
+                     gs.frisbeeSpeed = new Vector2(0,0);
+                     return;
+              }
               gs.frisbeePosition += gs.frisbeeSpeed;
+              
        }
 
        public static void HandleCollisions(ref WindjermanGameState gs)
@@ -51,19 +60,31 @@ public static class WindjermanGameStateRules
                     <= Mathf.Pow( WindjermanGameState.frisbeeRadius+ WindjermanGameState.playerRadius,
                            2)))
               {
+                     gs.frisbeePosition = new Vector2(gs.playerPosition1.x+1.2f, gs.playerPosition1.y);
                      gs.isFreeze1 = true;
+                     gs.frisbeeFrozen = true;
+                     
+
               }
               else if ((sqrDistance2
                         <= Mathf.Pow( WindjermanGameState.frisbeeRadius+ WindjermanGameState.playerRadius,
                                2)))
               {
+                     gs.frisbeePosition = new Vector2(gs.playerPosition2.x-1.2f, gs.playerPosition2.y);
                      gs.isFreeze2 = true;
+                     gs.frisbeeFrozen = true;
               }
 
-              if (gs.frisbeePosition.y > 2 || gs.frisbeePosition.y < -2)
+              if (gs.frisbeePosition.y > 5 || gs.frisbeePosition.y < -5)
               {
                      gs.frisbeeSpeed = new Vector2(gs.frisbeeSpeed.x, -gs.frisbeeSpeed.y);
               }
+              if (gs.frisbeePosition.x > 10 || gs.frisbeePosition.x < -10)
+              {
+                     gs.frisbeeSpeed = new Vector2(-gs.frisbeeSpeed.x, gs.frisbeeSpeed.y);
+              }
+
+              
               //TODO: Cage à faire !! 
               
        }
@@ -71,21 +92,23 @@ public static class WindjermanGameStateRules
 
        static void HandleAgentInputs1(ref WindjermanGameState gs, int chosenPlayerAction1)
        {
+              var frisbeeVelocity = WindjermanGameState.frisbeeVelocity;
               switch (chosenPlayerAction1)
               {
                      case 0: // DO NOTHING
                             break;
                      case 1: // LEFT
                      {
-                            if (!gs.isFreeze1)
+                            if (!gs.isFreeze1 && gs.playerPosition1.x > -10)
                             {
-                                   gs.playerPosition1 += Vector2.left * WindjermanGameState.playerSpeed;                                   
+                                   gs.playerPosition1 += Vector2.left * WindjermanGameState.playerSpeed;      
+                                   
                             }
                             break;
                      }
                      case 2: // RIGHT
                      {
-                            if (!gs.isFreeze1)
+                            if (!gs.isFreeze1 && gs.playerPosition1.x < -2f)
                             {
                                    gs.playerPosition1 += Vector2.right * WindjermanGameState.playerSpeed;
                             }
@@ -95,7 +118,11 @@ public static class WindjermanGameStateRules
                      {
                             if (!gs.isFreeze1)
                             {
-                                   gs.playerPosition1 += Vector2.up * WindjermanGameState.playerSpeed;                                   
+                                   if (!(gs.playerPosition1.y > 5))
+                                   {
+                                          gs.playerPosition1 += Vector2.up * WindjermanGameState.playerSpeed;       
+                                   }
+                                                                      
                             }
                             break;
                      }
@@ -103,65 +130,43 @@ public static class WindjermanGameStateRules
                      {
                             if (!gs.isFreeze1)
                             {
-                                   gs.playerPosition1 += Vector2.down * WindjermanGameState.playerSpeed;                                   
+                                   if (!(gs.playerPosition1.y < -5))
+                                   {
+                                          gs.playerPosition1 += Vector2.down * WindjermanGameState.playerSpeed;
+                                   }
+                                                                      
                             }
                             break;
                      }
-                     case 5: // UP LEFT
-                     {
-                            if (!gs.isFreeze1)
-                            {
-                                   gs.playerPosition1 += Vector2.left * Vector2.up * WindjermanGameState.playerSpeed;                                   
-                            }
-                            break;
-                     }
-                     case 6: // UP RIGHT
-                     {
-                            if (!gs.isFreeze1)
-                            {      
-                                   gs.playerPosition1 += Vector2.right * Vector2.up * WindjermanGameState.playerSpeed;                                   
-                            }
-                            break;
-                     }
-                     case 7: // DOWN LEFT
-                     {
-                            if (!gs.isFreeze1)
-                            {
-                                   gs.playerPosition1 += Vector2.left * Vector2.down * WindjermanGameState.playerSpeed;                                   
-                            }
-                            break;
-                     }
-                     case 8: // DOWN RIGHT
-                     {
-                            if (!gs.isFreeze1)
-                            {
-                                   gs.playerPosition1 += Vector2.right * Vector2.down * WindjermanGameState.playerSpeed;                                   
-                            }
-                            break;
-                     }
-                     case 9: //SHOOT DOWN
+                     case 5: //SHOOT DOWN
                      {
                             if (gs.isFreeze1)
                             {
-                                   gs.frisbeeSpeed = new Vector2(1f, -1f);
+                                   Debug.Log(gs.frisbeeFrozen);
+                                   gs.frisbeeFrozen = false;
+                                   gs.frisbeeSpeed = new Vector2(frisbeeVelocity, -frisbeeVelocity);
                                    gs.isFreeze1 = false;
                             }
                             break;
                      }
-                     case 10: // SHOOT STRAIGHT
+                     case 6: // SHOOT STRAIGHT
                      {
                             if (gs.isFreeze1)
                             {
-                                   gs.frisbeeSpeed = new Vector2(1f, 0f);
+                                   Debug.Log(gs.frisbeeFrozen);
+                                   gs.frisbeeFrozen = false;
+                                   gs.frisbeeSpeed = new Vector2(frisbeeVelocity, 0f);
                                    gs.isFreeze1 = false;
                             }
                             break;
                      }
-                     case 11: // SHOOT UP
+                     case 7: // SHOOT UP
                      {
                             if (gs.isFreeze1)
                             {
-                                   gs.frisbeeSpeed = new Vector2(1f, 1f);
+                                   Debug.Log(gs.frisbeeFrozen);
+                                   gs.frisbeeFrozen = false;
+                                   gs.frisbeeSpeed = new Vector2(frisbeeVelocity, frisbeeVelocity);
                                    gs.isFreeze1 = false;
                             }
                             break;
@@ -172,73 +177,90 @@ public static class WindjermanGameStateRules
        
        static void HandleAgentInputs2(ref WindjermanGameState gs, int chosenPlayerAction2)
        {
+              var frisbeeVelocity = WindjermanGameState.frisbeeVelocity;
               switch (chosenPlayerAction2)
               {
                      case 0: // DO NOTHING
                             break;
                      case 1: // LEFT
                      {
-                            gs.playerPosition2 += Vector2.left * WindjermanGameState.playerSpeed;
+                            if (gs.isFreeze2)
+                            {
+                                   break;
+                            }
+
+                            if (gs.playerPosition2.x > 2f)
+                            {
+                                   gs.playerPosition2 += Vector2.left * WindjermanGameState.playerSpeed;
+                            }
+
                             break;
                      }
                      case 2: // RIGHT
                      {
-                            gs.playerPosition2 += Vector2.right * WindjermanGameState.playerSpeed;
+                            if (gs.isFreeze2)
+                            {
+                                   break;
+                            }
+                            if (gs.playerPosition2.x < 10)
+                            {
+                                   gs.playerPosition2 += Vector2.right * WindjermanGameState.playerSpeed;
+                            }
+
                             break;
                      }
                      case 3: // UP
                      {
-                            gs.playerPosition2 += Vector2.up * WindjermanGameState.playerSpeed;
+                            if (gs.isFreeze2)
+                            {
+                                   break;
+                            }
+                            if (!(gs.playerPosition2.y > 5))
+                            {
+                                   gs.playerPosition2 += Vector2.up * WindjermanGameState.playerSpeed;       
+                            }
                             break;
+                            
                      }
                      case 4: // DOWN
                      {
-                            gs.playerPosition2 += Vector2.down * WindjermanGameState.playerSpeed;
-                            break;
-                     }
-                     case 5: // UP LEFT
-                     {
-                            gs.playerPosition2 += Vector2.left * Vector2.up * WindjermanGameState.playerSpeed;
-                            break;
-                     }
-                     case 6: // UP RIGHT
-                     {
-                            gs.playerPosition2 += Vector2.right * Vector2.up * WindjermanGameState.playerSpeed;
-                            break;
-                     }
-                     case 7: // DOWN LEFT
-                     {
-                            gs.playerPosition2 += Vector2.left * Vector2.down * WindjermanGameState.playerSpeed;
-                            break;
-                     }
-                     case 8: // DOWN RIGHT
-                     {
-                            gs.playerPosition2 += Vector2.right * Vector2.down * WindjermanGameState.playerSpeed;
-                            break;
-                     }
-                     case 9: //SHOOT DOWN
-                     {
                             if (gs.isFreeze2)
                             {
-                                   gs.frisbeeSpeed = new Vector2(-1f, -1f);
+                                   break;
+                            }
+                            if (!(gs.playerPosition2.y < -5))
+                            {
+                                   gs.playerPosition2 += Vector2.down * WindjermanGameState.playerSpeed;       
+                            }
+                            break;
+                     }
+                     case 5: //SHOOT DOWN
+                     {
+                            
+                            if (gs.isFreeze2)
+                            {
+                                   gs.frisbeeFrozen = false;
+                                   gs.frisbeeSpeed = new Vector2(-frisbeeVelocity, -frisbeeVelocity);
                                    gs.isFreeze2 = false;
                             }
                             break;
                      }
-                     case 10: // SHOOT STRAIGHT
+                     case 6: // SHOOT STRAIGHT
                      {
                             if (gs.isFreeze2)
                             {
-                                   gs.frisbeeSpeed = new Vector2(-1f, 0f);
+                                   gs.frisbeeFrozen = false;
+                                   gs.frisbeeSpeed = new Vector2(-frisbeeVelocity, 0f);
                                    gs.isFreeze2 = false;
                             }
                             break;
                      }
-                     case 11: // SHOOT UP
+                     case 7: // SHOOT UP
                      {
                             if (gs.isFreeze2)
                             {
-                                   gs.frisbeeSpeed = new Vector2(-1f, 1f);
+                                   gs.frisbeeFrozen = false;
+                                   gs.frisbeeSpeed = new Vector2(-frisbeeVelocity, frisbeeVelocity);
                                    gs.isFreeze2 = false;
                             }
                             break;
@@ -248,12 +270,12 @@ public static class WindjermanGameStateRules
        
        private static readonly int[] AvailableActionsFree = new[]
        {
-              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+              0, 1, 2, 3, 4, 5, 6, 7
        };
        
        private static readonly int[] AvailableActionsFrozen = new[]
        {
-              0, 9, 10, 11
+              0, 5, 6, 7
        };
        
        private static readonly int[] AvailableActionsStun = new[]

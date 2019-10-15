@@ -22,7 +22,7 @@ public class GameSystemScript : MonoBehaviour
         PlayerView1 = Instantiate(PlayerPrefab1).GetComponent<Transform>();
         PlayerView2 = Instantiate(PlayerPrefab2).GetComponent<Transform>();
         frisbeeView = Instantiate(FrisbeePrefab).GetComponent<Transform>();
-        agent = new RandomAgent();
+        agent = new HumanPlayerAgent();
     }
 
     // Update is called once per frame

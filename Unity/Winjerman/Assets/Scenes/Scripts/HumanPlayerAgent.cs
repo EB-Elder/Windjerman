@@ -9,7 +9,17 @@ public class HumanPlayerAgent : IAgent
         
         if (Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
         {
-            return 10;
+            return 6;
+        }
+        
+        if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
+        {
+            return 5;
+        }
+        
+        if (Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.UpArrow))
+        {
+            return 7;
         }
         
         if (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.UpArrow))
@@ -30,26 +40,6 @@ public class HumanPlayerAgent : IAgent
         if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.UpArrow))
         {
             return 2;
-        }
-        
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.DownArrow))
-        {
-            return 5;
-        }
-        
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.UpArrow))
-        {
-            return 7;
-        }
-        
-        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.DownArrow))
-        {
-            return 6;
-        }
-        
-        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.UpArrow))
-        {
-            return 8;
         }
 
         return 0;
