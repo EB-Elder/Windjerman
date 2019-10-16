@@ -167,6 +167,7 @@ MonoBehaviour:
     type: 3}
   FrisbeePrefab: {fileID: 7329475501791988332, guid: be40c480797088f4285ce4acaa96e9a9,
     type: 3}
+  IMS: {fileID: 1889283107}
 --- !u!4 &341060058
 Transform:
   m_ObjectHideFlags: 0
@@ -855,7 +856,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1889283106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 123fa66a933d31b4ebc9549139082780, type: 3}
+  m_Script: {fileID: 11500000, guid: 17bd96c9f18ba664baa0efec898a0039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasInterface: {fileID: 1407756436}
