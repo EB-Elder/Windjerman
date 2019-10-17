@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class HumanPlayerAgent : IAgent
@@ -10,7 +11,7 @@ public class HumanPlayerAgent : IAgent
     {
         this.PlayerID = PlayerID;
     }
-    public int Act(ref WindjermanGameState gs, int[] availableActions)
+    public int Act(ref WindjermanGameState gs, NativeList<int> availableActions)
     {
 
         if (PlayerID == 0)

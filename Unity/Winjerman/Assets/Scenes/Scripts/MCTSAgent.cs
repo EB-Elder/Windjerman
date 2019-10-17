@@ -4,16 +4,16 @@ using Unity.Collections;
 using UnityEngine;
 using Rules = WindjermanGameStateRules;
 
-
+/*
 public class Node
 {
-    public Node NodeParent;
-    public List<Node> NodeChild;
-    public WindjermanGameState currentGs;
-    public int numberSelected;// Nombre de fois ou cette action a était séléctionner;
+    public int actions;
+    public int numberSelected;
+    public int reward;// Nombre de fois ou cette action a était séléctionner;
     public int numberConsidered; // Nombre de fois ou cette action aurait pu être séléctionner
     
 }
+
 
 
 public class MCTSAgent : IAgent
@@ -74,4 +74,4 @@ public class MCTSAgent : IAgent
         
         return 0;
     }
-}
+}*/

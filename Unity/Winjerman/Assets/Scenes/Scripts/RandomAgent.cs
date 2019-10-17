@@ -1,16 +1,19 @@
 using System;
+using Unity.Collections;
 using Random = UnityEngine.Random;
 
 public interface IAgent
 {
     //PlayerID not used everywhere
-    int Act(ref WindjermanGameState gs, int[] availableActions);
+    int Act(ref WindjermanGameState gs, NativeList<int> availableActions);
 }
 
-public class RandomAgent : IAgent
+public struct RandomAgent : IAgent
 {
-    public int Act(ref WindjermanGameState gs, int[] availableActions)
+    public Unity.Mathematics.Random rdm;
+    
+    public int Act(ref WindjermanGameState gs, NativeList<int> availableActions)
     {
-        return availableActions[Random.Range(0, availableActions.Length)];
+        return availableActions[rdm.NextInt(0, availableActions.Length)];
     }
 }

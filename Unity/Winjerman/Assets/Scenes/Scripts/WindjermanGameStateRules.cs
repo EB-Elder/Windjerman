@@ -158,7 +158,7 @@ public static class WindjermanGameStateRules
                      {
                             if (gs.isFreeze1)
                             {
-                                   Debug.Log(gs.frisbeeFrozen);
+//                                   Debug.Log(gs.frisbeeFrozen);
                                    gs.frisbeeFrozen = false;
                                    gs.frisbeeSpeed = new Vector2(frisbeeVelocity, -frisbeeVelocity);
                                    gs.isFreeze1 = false;
@@ -179,7 +179,7 @@ public static class WindjermanGameStateRules
                      {
                             if (gs.isFreeze1)
                             {
-                                   Debug.Log(gs.frisbeeFrozen);
+//                                   Debug.Log(gs.frisbeeFrozen);
                                    gs.frisbeeFrozen = false;
                                    gs.frisbeeSpeed = new Vector2(frisbeeVelocity, frisbeeVelocity);
                                    gs.isFreeze1 = false;
@@ -283,22 +283,23 @@ public static class WindjermanGameStateRules
               }
        }
        
-       private static readonly int[] AvailableActionsFree = new[]
+       public static readonly NativeList<int> AvailableActionsFree = new NativeList<int>(8, Allocator.Persistent)
        {
               0, 1, 2, 3, 4, 5, 6, 7
        };
        
-       private static readonly int[] AvailableActionsFrozen = new[]
+       public static readonly NativeList<int> AvailableActionsFrozen = new NativeList<int>(4, Allocator.Persistent)
        {
               0, 5, 6, 7
        };
        
-       private static readonly int[] AvailableActionsStun = new[]
+       public static readonly NativeList<int> AvailableActionsStun = new NativeList<int>(1, Allocator.Persistent)
        {
               0
        };
+       
 
-       public static int[] GetAvailableActions1(ref WindjermanGameState gs)
+       public static NativeList<int> GetAvailableActions1(ref WindjermanGameState gs)
        {
               if (gs.isFreeze1)
               {
@@ -313,7 +314,7 @@ public static class WindjermanGameStateRules
 
        }
        
-       public static int[] GetAvailableActions2(ref WindjermanGameState gs)
+       public static NativeList<int> GetAvailableActions2(ref WindjermanGameState gs)
        {
               if (gs.isFreeze2)
               {
@@ -326,6 +327,35 @@ public static class WindjermanGameStateRules
 
               return AvailableActionsFree;
        }
+       
+       public static int GetAvailableActions1int(ref WindjermanGameState gs)
+       {
+              if (gs.isFreeze2)
+              {
+                     return 1;
+              }
+              if (gs.isStun2)
+              {
+                     return 2;
+              }
+
+              return 0;
+       }
+       
+       public static int GetAvailableActions2int(ref WindjermanGameState gs)
+       {
+              if (gs.isFreeze2)
+              {
+                     return 1;
+              }
+              if (gs.isStun2)
+              {
+                     return 2;
+              }
+
+              return 0;
+       }
+       
 
        public static WindjermanGameState Clone(ref WindjermanGameState gs)
        {
@@ -345,5 +375,22 @@ public static class WindjermanGameStateRules
               gsCopy.isStun2 = gs.isStun2;
 
               return gsCopy;
+       }
+       
+       public static void CopyTo(ref WindjermanGameState gs, ref WindjermanGameState gsCopy)
+       {
+              gsCopy.frisbeeSpeed = gs.frisbeeSpeed;
+              gsCopy.Timer = gs.Timer;
+              gsCopy.playerPosition1 = gs.playerPosition1;
+              gsCopy.playerPosition2 = gs.playerPosition2;
+              gsCopy.frisbeePosition = gs.frisbeePosition;
+              gsCopy.frisbeeFrozen = gs.frisbeeFrozen;
+              gsCopy.isGameOver = gs.isGameOver;
+              gsCopy.playerScore1 = gs.playerScore1;
+              gsCopy.playerScore2 = gs.playerScore2;
+              gsCopy.isFreeze1 = gs.isFreeze1;
+              gsCopy.isFreeze2 = gs.isFreeze2;
+              gsCopy.isStun1 = gs.isStun1;
+              gsCopy.isStun2 = gs.isStun2;
        }
 }
