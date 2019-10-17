@@ -120,7 +120,7 @@ public class AAgentScript : IAgent
         else return Vector2.Distance(gs.playerPosition2, gs.frisbeePosition);
     }
 
-    public int Act(ref WindjermanGameState gs, NativeArray<int> availableActions)
+    public int Act(ref WindjermanGameState gs, NativeList<int> availableActions)
     {
         //déterminer la distance entre le joueur et le frisbee au moment T
         currentDistanceFromFrisbee = CalculerCurrentDistanceFromFrisbee(ref gs);
@@ -207,7 +207,7 @@ public class AAgentScript : IAgent
                 return indexClosestToFrisbee;
             }
             else
-            {
+            {/*
                 //si le joueur a le frisbee, les bonnes actions sont celles qui lancent le frisbee loin de l'autre joueur
                 for(int i = 0; i < listeNodes.Length; i++)
                 {
@@ -217,6 +217,7 @@ public class AAgentScript : IAgent
                         //tirer tout droit est la meilleure option mais on ajoute une variation pour rendre le bot moins prédictible
                     }
                 }
+                */
             }
         }
         else

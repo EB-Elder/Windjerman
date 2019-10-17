@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -373,24 +374,24 @@ public static class WindjermanGameStateRules
               gsCopy.isFreeze2 = gs.isFreeze2;
               gsCopy.isStun1 = gs.isStun1;
               gsCopy.isStun2 = gs.isStun2;
+              
 
               return gsCopy;
        }
-       
-       public static void CopyTo(ref WindjermanGameState gs, ref WindjermanGameState gsCopy)
+
+       public static long GetHashCodeJ1(ref WindjermanGameState gs)
        {
-              gsCopy.frisbeeSpeed = gs.frisbeeSpeed;
-              gsCopy.Timer = gs.Timer;
-              gsCopy.playerPosition1 = gs.playerPosition1;
-              gsCopy.playerPosition2 = gs.playerPosition2;
-              gsCopy.frisbeePosition = gs.frisbeePosition;
-              gsCopy.frisbeeFrozen = gs.frisbeeFrozen;
-              gsCopy.isGameOver = gs.isGameOver;
-              gsCopy.playerScore1 = gs.playerScore1;
-              gsCopy.playerScore2 = gs.playerScore2;
-              gsCopy.isFreeze1 = gs.isFreeze1;
-              gsCopy.isFreeze2 = gs.isFreeze2;
-              gsCopy.isStun1 = gs.isStun1;
-              gsCopy.isStun2 = gs.isStun2;
+              var hash = 0L;
+              hash += 10 + (long) math.round(math.clamp(math.distance(gs.playerPosition1.x, gs.frisbeePosition.x), 0, 8));
+              hash += 10 + (long) math.round(math.clamp(math.distance(gs.playerPosition1.y, gs.frisbeePosition.y), 0, 10));
+              return hash;
+       }
+       
+       public static long GetHashCodeJ2(ref WindjermanGameState gs)
+       {
+              var hash = 0L;
+              hash += 10 + (long) math.round(math.clamp(math.distance(gs.playerPosition2.x, gs.frisbeePosition.x), 0, 8));
+              hash += 10 + (long) math.round(math.clamp(math.distance(gs.playerPosition2.y, gs.frisbeePosition.y), 0, 10));
+              return hash;
        }
 }
