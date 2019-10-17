@@ -212,7 +212,7 @@ public class AAgentScript : IAgent
                 return indexClosestToFrisbee;
             }
             else
-            {
+            {/*
                 //si le joueur a le frisbee, les bonnes actions sont celles qui lancent le frisbee loin de l'autre joueur
                 for(int i = 0; i < listeNodes.Length; i++)
                 {
@@ -261,6 +261,7 @@ public class AAgentScript : IAgent
                         }
                     }
                 }
+                */
             }
         }
         else

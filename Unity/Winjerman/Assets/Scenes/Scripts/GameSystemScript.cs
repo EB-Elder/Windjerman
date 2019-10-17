@@ -62,7 +62,7 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.MCTS:
 
-                Debug.Log("Agent pas implémenté");
+                agentJ1 = new MCTSAgent(0);
                 break;
 
             case listeChoix.QLEARNING:
@@ -95,7 +95,7 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.MCTS:
 
-                Debug.Log("Agent pas implémenté");
+                agentJ2 = new MCTSAgent(1);
                 break;
 
             case listeChoix.QLEARNING:
@@ -129,12 +129,12 @@ public class GameSystemScript : MonoBehaviour
             if (gs.isPaused == false)
             {
                 gs.isPaused = true;
-                IMS.Pause(gs.isPaused);
+                //IMS.Pause(gs.isPaused);
             }
             else
             {
                 gs.isPaused = false;
-                IMS.Pause(gs.isPaused);
+                //IMS.Pause(gs.isPaused);
             }
         }
 
