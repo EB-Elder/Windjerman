@@ -22,7 +22,7 @@ public static class WindjermanGameStateRules
               gs.playerPosition1 = new Vector2(-5f,0f);
               gs.playerPosition2 = new Vector2(5f,0f);
               gs.isGameOver = false;
-              
+              gs.dureePartie = 120;
               
        }
        
@@ -30,7 +30,7 @@ public static class WindjermanGameStateRules
        {
               if (gs.isGameOver)
               {
-                     throw new Exception("YOU SHOULD NOT TRY TO UPDATE GAME STATE WHEN GAME IS OVER !!!");
+                    //throw new Exception("YOU SHOULD NOT TRY TO UPDATE GAME STATE WHEN GAME IS OVER !!!");
               }
               UpdateFrisbee(ref gs);
               HandleAgentInputs1(ref gs, chosenPlayerAction1);

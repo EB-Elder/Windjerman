@@ -9,12 +9,11 @@ public struct WindjermanGameState
     public const float playerRadius = 0.5f;
     public const float playerSpeed = 0.3f;
     public const float frisbeeRadius = 0.5f;
-    public const float frisbeeVelocity = 0.05f;
-    
-        
-        
-    //public const Vector2 goalPosition1 = new Vector2(-5,0);
+    public const float frisbeeVelocity = 0.25f;
 
+
+    //public const Vector2 goalPosition1 = new Vector2(-5,0);
+    public int dureePartie;
     public Vector2 frisbeeSpeed;
     public float Timer;
     public Vector2 playerPosition1;

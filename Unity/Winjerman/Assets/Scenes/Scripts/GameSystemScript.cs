@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Rules = WindjermanGameStateRules;
 public class GameSystemScript : MonoBehaviour
@@ -60,12 +61,12 @@ public class GameSystemScript : MonoBehaviour
                 agentJ1 = new RandomRolloutAgent(0);
                 break;
 
-            case listeChoix.MCTS:
+            case listeChoix.DIJKSTRA:
 
-                agentJ1 = new MCTSAgent(0);
+                agentJ1 = new AAgentScript(0);
                 break;
 
-            case listeChoix.QLEARNING:
+            case listeChoix.MCTS:
 
                 Debug.Log("Agent pas implémenté");
                 break;
@@ -93,12 +94,12 @@ public class GameSystemScript : MonoBehaviour
                 agentJ2 = new RandomRolloutAgent(1);
                 break;
 
-            case listeChoix.MCTS:
+            case listeChoix.DIJKSTRA:
 
-                agentJ2 = new MCTSAgent(1);
+                agentJ2 = new AAgentScript(1);
                 break;
 
-            case listeChoix.QLEARNING:
+            case listeChoix.MCTS:
 
                 Debug.Log("Agent pas implémenté");
                 break;
@@ -110,18 +111,34 @@ public class GameSystemScript : MonoBehaviour
         }
 
         gameStarted = true;
+        StartCoroutine(TimerGame(gs.dureePartie));
     }
 
+
+    //gestion du timer
+    public IEnumerator TimerGame(int nbSec)
+    {
+        for(int i = 0; i < nbSec; i++)
+        {
+            yield return new WaitForSeconds(1);
+            IMS.UpdateTimer(nbSec - i);
+        }
+
+        gs.isGameOver = true;
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (gs.isGameOver)
         {
+            StopAllCoroutines();
             return;
         }
 
         if (!gameStarted) return;
+
+
 
         //echap pour mettre le jeu en pause
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -146,9 +163,11 @@ public class GameSystemScript : MonoBehaviour
             IMS.FinDePartie();
             gs.isGameOver = true;
         }
+
         PlayerView1.position = gs.playerPosition1;
         PlayerView2.position = gs.playerPosition2;
         frisbeeView.position = gs.frisbeePosition;
+
         Rules.Step(ref gs, agentJ1.Act(ref gs, Rules.GetAvailableActions1(ref gs)), agentJ2.Act(ref gs, Rules.GetAvailableActions2(ref gs)));
     }
 }

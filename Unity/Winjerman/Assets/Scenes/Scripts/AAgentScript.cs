@@ -173,7 +173,7 @@ public class AAgentScript : IAgent
 
         //une fois les nodes créés, on détermine l'action à réaliser
         int action = FindBestAction(ref listeNodes, ref gs, ref availableActions);
-        listeNodes.Dispose();
+        //listeNodes.Dispose();
         return action;
     }
 
@@ -187,19 +187,18 @@ public class AAgentScript : IAgent
         {
             if(!gs.isFreeze1 && gs.frisbeePosition.x < 0)
             {
-                for(int i = 0; i < listeNodes.Length; i++)
+                for (int i = 0; i < listeNodes.Length; i++)
                 {
                     //si l'action permet d'attraper le frisbee on la sélectionne
-                    if(listeNodes[i].hasFrisbee)
+                    if (listeNodes[i].hasFrisbee)
                     {
-                        listeNodes.Dispose();
-                        lastActionDone = i;
+                        //listeNodes.Dispose();
                         return i;
                     }
                     else
                     {
                         //si l'action réduit la distance entre le joueur et le frisbee, on conserve le résultat de cette action
-                        if(listeNodes[i].getDistanceFromFrisbee() < currentDistanceFromFrisbee)
+                        if (listeNodes[i].getDistanceFromFrisbee() < currentDistanceFromFrisbee)
                         {
                             indexClosestToFrisbee = i;
                             currentDistanceFromFrisbee = listeNodes[i].getDistanceFromFrisbee();
@@ -207,12 +206,11 @@ public class AAgentScript : IAgent
                     }
                 }
 
-                listeNodes.Dispose();
-                lastActionDone = indexClosestToFrisbee;
+                //listeNodes.Dispose();
                 return indexClosestToFrisbee;
             }
             else
-            {/*
+            {
                 //si le joueur a le frisbee, les bonnes actions sont celles qui lancent le frisbee loin de l'autre joueur
                 for(int i = 0; i < listeNodes.Length; i++)
                 {
@@ -220,11 +218,11 @@ public class AAgentScript : IAgent
                     if(highGround)
                     {
                         //tirer tout droit est la meilleure option mais on ajoute une variation pour rendre le bot moins prédictible
-                        Unity.Mathematics.Random random = new Unity.Mathematics.Random();
+                        Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(1, 100000));
                         float proba = random.NextFloat(0f, 3f);
 
                         //si proba inférieure à 1, l'agent tire en diagonale
-                        if(proba < 1f)
+                        if (proba < 1f)
                         {
                             bool probaDirection = random.NextBool();
 
@@ -260,8 +258,49 @@ public class AAgentScript : IAgent
                             }
                         }
                     }
+                    else
+                    {
+                        //tirer en diagonale est la meilleure option mais on ajoute une variation pour rendre le bot moins prédictible
+                        Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(1, 100000));
+                        float proba = random.NextFloat(0f, 3f);
+
+                        //si proba inférieure à 1, l'agent tire tout droit
+                        if (proba < 1f)
+                        {
+                            //il doit tirer tout droit
+                            if (listeNodes[i].gsNode.frisbeePosition.y == listeNodes[i].gsNode.playerPosition1.y)
+                            {
+                                lastActionDone = availableActions[i];
+                                return availableActions[i];
+                            }
+                        }
+                        else
+                        {
+                            //sinon il tire en diagonale avec une variation
+                            bool probaDirection = random.NextBool();
+
+                            if (probaDirection)
+                            {
+                                //tir en bas
+                                if (listeNodes[i].gsNode.frisbeePosition.y < listeNodes[i].gsNode.playerPosition1.y)
+                                {
+                                    lastActionDone = availableActions[i];
+                                    return availableActions[i];
+                                }
+                            }
+                            else
+                            {
+                                //tir en haut
+                                if (listeNodes[i].gsNode.frisbeePosition.y > listeNodes[i].gsNode.playerPosition1.y)
+                                {
+                                    lastActionDone = availableActions[i];
+                                    return availableActions[i];
+                                }
+                            }
+                        }
+                    }
                 }
-                */
+                
             }
         }
         else

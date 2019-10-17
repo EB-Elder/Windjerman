@@ -31,6 +31,7 @@ public class InterfaceManagerScript : MonoBehaviour
     [SerializeField] private Text finDePartie;
     [SerializeField] private Button bouttonquitter;
     [SerializeField] private Text pause;
+    [SerializeField] private Text timer;
 
     [Header("Références")]
     [SerializeField] private GameSystemScript gameSystem;
@@ -61,6 +62,11 @@ public class InterfaceManagerScript : MonoBehaviour
         }
     }
 
+    public void UpdateTimer(int nbSecRestante)
+    {
+        timer.text = nbSecRestante.ToString();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +75,7 @@ public class InterfaceManagerScript : MonoBehaviour
         retourMenu.gameObject.SetActive(false);
         score.gameObject.SetActive(false);
         pause.gameObject.SetActive(false);
+        timer.gameObject.SetActive(false);
 
         //activation des boutons
         play.gameObject.SetActive(true);
@@ -121,6 +128,8 @@ public class InterfaceManagerScript : MonoBehaviour
         play.gameObject.SetActive(false);
 
         score.gameObject.SetActive(true);
+        timer.gameObject.SetActive(true);
+
         titre.gameObject.SetActive(false);
 
         //lancer la partie
