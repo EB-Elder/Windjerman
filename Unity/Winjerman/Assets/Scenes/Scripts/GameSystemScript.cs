@@ -112,6 +112,7 @@ public class GameSystemScript : MonoBehaviour
         gameStarted = true;
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -121,7 +122,24 @@ public class GameSystemScript : MonoBehaviour
         }
 
         if (!gameStarted) return;
-        
+
+        //echap pour mettre le jeu en pause
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (gs.isPaused == false)
+            {
+                gs.isPaused = true;
+                IMS.Pause(gs.isPaused);
+            }
+            else
+            {
+                gs.isPaused = false;
+                IMS.Pause(gs.isPaused);
+            }
+        }
+
+        if (gs.isPaused) return;
+
         IMS.UpdateScore(gs.playerScore1, gs.playerScore2);
         if (gs.playerScore1 >= 3 || gs.playerScore2 >= 3)
         {

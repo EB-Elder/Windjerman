@@ -22,6 +22,7 @@ public struct WindjermanGameState
     public Vector2 frisbeePosition;
     public bool frisbeeFrozen;
     public bool isGameOver;
+    public bool isPaused;
     public int playerScore1;
     public int playerScore2;
     public bool isFreeze1; //Il a le Frisbee
