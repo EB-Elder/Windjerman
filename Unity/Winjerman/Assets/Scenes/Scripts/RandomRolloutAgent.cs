@@ -41,7 +41,7 @@ public class RandomRolloutAgent : IAgent
 
         public RandomAgent rdmAgent;
 
-        [WriteOnly]
+        //[WriteOnly]
         public NativeArray<long> summedScores;
         
         public void Execute(int index)

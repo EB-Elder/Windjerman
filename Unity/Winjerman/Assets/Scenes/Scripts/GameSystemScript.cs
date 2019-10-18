@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Rules = WindjermanGameStateRules;
 using Spawn = SpawnSystem;
@@ -59,12 +60,12 @@ public class GameSystemScript : MonoBehaviour
                 agentJ1 = new RandomRolloutAgent(0);
                 break;
 
-            case listeChoix.MCTS:
+            case listeChoix.DIJKSTRA:
 
-                Debug.Log("Agent pas implémenté");
+                agentJ1 = new AAgentScript(0);
                 break;
 
-            case listeChoix.QLEARNING:
+            case listeChoix.MCTS:
 
                 Debug.Log("Agent pas implémenté");
                 break;
@@ -95,12 +96,12 @@ public class GameSystemScript : MonoBehaviour
                 agentJ2 = new RandomRolloutAgent(1);
                 break;
 
-            case listeChoix.MCTS:
+            case listeChoix.DIJKSTRA:
 
-                Debug.Log("Agent pas implémenté");
+                agentJ2 = new AAgentScript(1);
                 break;
 
-            case listeChoix.QLEARNING:
+            case listeChoix.MCTS:
 
                 Debug.Log("Agent pas implémenté");
                 break;
@@ -122,15 +123,31 @@ public class GameSystemScript : MonoBehaviour
     }
 
 
+    //gestion du timer
+    public IEnumerator TimerGame(int nbSec)
+    {
+        for(int i = 0; i < nbSec+1; i++)
+        {
+            yield return new WaitForSeconds(1);
+            IMS.UpdateTimer(nbSec - i);
+        }
+
+        gs.isGameOver = true;
+        IMS.FinDePartie();
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (gs.isGameOver)
         {
+            StopAllCoroutines();
             return;
         }
 
         if (!gameStarted) return;
+
+
 
         //echap pour mettre le jeu en pause
         /*if (Input.GetKeyDown(KeyCode.Escape))

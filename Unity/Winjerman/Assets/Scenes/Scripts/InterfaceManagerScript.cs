@@ -10,8 +10,8 @@ public enum listeChoix
     HUMAN = 0,
     RANDOM = 1,
     RANDOMROLLOUT = 2,
-    QLEARNING = 3,
-    MCTS = 4,
+    DIJKSTRA = 3,
+    MCTS = 4
 }
 
 
@@ -30,6 +30,8 @@ public class InterfaceManagerScript : MonoBehaviour
     [SerializeField] private Text vs;
     [SerializeField] private Text finDePartie;
     [SerializeField] private Button bouttonquitter;
+    [SerializeField] private Text pause;
+    [SerializeField] private Text timer;
 
     [Header("Références")]
     [SerializeField] private GameSystemScript gameSystem;
@@ -47,6 +49,11 @@ public class InterfaceManagerScript : MonoBehaviour
         choix2.onClick.AddListener(ChangeAgent2);
     }
 
+    public void UpdateTimer(int nbSecRestante)
+    {
+        timer.text = nbSecRestante.ToString();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +61,8 @@ public class InterfaceManagerScript : MonoBehaviour
         finDePartie.gameObject.SetActive(false);
         retourMenu.gameObject.SetActive(false);
         score.gameObject.SetActive(false);
+        pause.gameObject.SetActive(false);
+        timer.gameObject.SetActive(false);
 
         //activation des boutons
         play.gameObject.SetActive(true);
@@ -81,6 +90,19 @@ public class InterfaceManagerScript : MonoBehaviour
         score.text = (scoreJ1 + " - " + scoreJ2);
     }
 
+    //fonction de mise en pause
+    public void Pause(bool etat)
+    {
+        if(etat)
+        {
+            pause.gameObject.SetActive(true);
+        }
+        else
+        {
+            pause.gameObject.SetActive(false);
+        }
+    }
+
     public void FinDePartie()
     {
         finDePartie.gameObject.SetActive(true);
@@ -106,6 +128,8 @@ public class InterfaceManagerScript : MonoBehaviour
         play.gameObject.SetActive(false);
 
         score.gameObject.SetActive(true);
+        timer.gameObject.SetActive(true);
+
         titre.gameObject.SetActive(false);
 
         //lancer la partie
@@ -131,17 +155,17 @@ public class InterfaceManagerScript : MonoBehaviour
 
             case listeChoix.RANDOMROLLOUT:
 
+                textButtonChoix1.text = "DIJKSTRA";
+                choix1Value = listeChoix.DIJKSTRA;
+                break;
+
+            case listeChoix.DIJKSTRA:
+
                 textButtonChoix1.text = "MCTS";
                 choix1Value = listeChoix.MCTS;
                 break;
 
             case listeChoix.MCTS:
-
-                textButtonChoix1.text = "QLEARNING";
-                choix1Value = listeChoix.QLEARNING;
-                break;
-
-            case listeChoix.QLEARNING:
 
                 textButtonChoix1.text = "HUMAN";
                 choix1Value = listeChoix.HUMAN;
@@ -160,6 +184,7 @@ public class InterfaceManagerScript : MonoBehaviour
     {
         switch (choix2Value)
         {
+
             case listeChoix.HUMAN:
 
                 textButtonChoix2.text = "RANDOM";
@@ -174,17 +199,17 @@ public class InterfaceManagerScript : MonoBehaviour
 
             case listeChoix.RANDOMROLLOUT:
 
+                textButtonChoix2.text = "DIJKSTRA";
+                choix2Value = listeChoix.DIJKSTRA;
+                break;
+
+            case listeChoix.DIJKSTRA:
+
                 textButtonChoix2.text = "MCTS";
                 choix2Value = listeChoix.MCTS;
                 break;
 
             case listeChoix.MCTS:
-
-                textButtonChoix2.text = "QLEARNING";
-                choix2Value = listeChoix.QLEARNING;
-                break;
-
-            case listeChoix.QLEARNING:
 
                 textButtonChoix2.text = "HUMAN";
                 choix2Value = listeChoix.HUMAN;
@@ -193,7 +218,7 @@ public class InterfaceManagerScript : MonoBehaviour
             default:
 
                 textButtonChoix2.text = "HUMAN";
-                choix2Value = listeChoix.HUMAN;
+                choix1Value = listeChoix.HUMAN;
                 break;
         }
     }
