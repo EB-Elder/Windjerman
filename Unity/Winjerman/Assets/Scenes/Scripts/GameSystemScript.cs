@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rules = WindjermanGameStateRules;
 using Spawn = SpawnSystem;
+using Unity.Entities;
 public class GameSystemScript : MonoBehaviour
 {
     public GameObject PlayerPrefab1;
@@ -35,13 +36,7 @@ public class GameSystemScript : MonoBehaviour
     //Fonction pour lancer la partie via l'interface
     public void StartGame(listeChoix choix1, listeChoix choix2)
     {
-        //Initialisation des règles
-        Rules.Init(ref gs);
-
-        //instanciation des éléments graphiques
-        PlayerView1 = Instantiate(PlayerPrefab1).GetComponent<Transform>();
-        PlayerView2 = Instantiate(PlayerPrefab2).GetComponent<Transform>();
-        frisbeeView = Instantiate(FrisbeePrefab).GetComponent<Transform>();
+        
 
         //création des agents en fonction des choix effectués sur l'interface
         switch (choix1)
@@ -53,7 +48,10 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.RANDOM:
 
-                agentJ1 = new RandomAgent();
+                agentJ1 = new RandomAgent
+                {
+                    rdm = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(0, 100))
+                };
                 break;
 
             case listeChoix.RANDOMROLLOUT:
@@ -86,7 +84,10 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.RANDOM:
 
-                agentJ2 = new RandomAgent();
+                agentJ2 = new RandomAgent
+                {
+                    rdm = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(0, 100))
+                };
                 break;
 
             case listeChoix.RANDOMROLLOUT:
@@ -113,6 +114,10 @@ public class GameSystemScript : MonoBehaviour
         gameStarted = true;
         gs.agentJ1 = agentJ1;
         gs.agentJ2 = agentJ2;
+        
+        World.Active.GetExistingSystem<SpawnSystem>().StartGame(agentJ1,agentJ2);
+        
+        
 
     }
 
@@ -143,13 +148,22 @@ public class GameSystemScript : MonoBehaviour
         }*/
 
         if (gs.isPaused) return;
+        
+        Debug.Log(gs.playerScore1 + " - " + gs.playerScore2);
+        
+        gs.playerScore1 = World.Active.GetExistingSystem<SpawnSystem>().score1();
+        gs.playerScore2 = World.Active.GetExistingSystem<SpawnSystem>().score2();
 
         IMS.UpdateScore(gs.playerScore1, gs.playerScore2);
         if (gs.playerScore1 >= 3 || gs.playerScore2 >= 3)
         {
+             Debug.Log("un des joueurs aatteint le score max");
+            
             IMS.FinDePartie();
             gs.isGameOver = true;
         }
+        
+        World.Active.GetExistingSystem<SpawnSystem>().Update();
        
     }
 }

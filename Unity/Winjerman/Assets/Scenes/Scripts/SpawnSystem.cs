@@ -20,7 +20,7 @@ public class SpawnSystem : ComponentSystem
     
     bool gameStarted = false;
 
-    public void StartGame()
+    public void StartGame(IAgent choix1, IAgent choix2)
     {
         //Initialisation des règles
         Rules.Init(ref gs);
@@ -52,13 +52,24 @@ public class SpawnSystem : ComponentSystem
 
         //création des agents en fonction des choix effectués sur l'interface
 
-        agentJ1 = gs.agentJ1;
-        agentJ2 = gs.agentJ2;
+        agentJ1 = choix1;
+        agentJ2 = choix2;
 
         gameStarted = true;
+        
+        Debug.Log("startgame du spawnsystem");
     }
 
     protected override void OnUpdate()
+    {
+        
+        
+        
+        
+        
+    }
+
+    public void Update()
     {
         EntityManager.SetComponentData(PlayerView1, new Translation
         {
@@ -77,6 +88,20 @@ public class SpawnSystem : ComponentSystem
         
 
         Rules.Step(ref gs, agentJ1.Act(ref gs, Rules.GetAvailableActions1(ref gs)), agentJ2.Act(ref gs, Rules.GetAvailableActions2(ref gs)));
+        
+        Debug.Log("l'update se fait");
+ 
+        
+    }
+
+    public int score1()
+    {
+        return gs.playerScore1;
+    }
+    
+    public int score2()
+    {
+        return gs.playerScore2;
     }
 
 }
