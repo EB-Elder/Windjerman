@@ -53,7 +53,9 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.RANDOM:
 
-                agentJ1 = new RandomAgent();
+                agentJ1 = new RandomAgent {
+                    rdm = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(0, 100))
+                };
                 break;
 
             case listeChoix.RANDOMROLLOUT:
@@ -86,7 +88,10 @@ public class GameSystemScript : MonoBehaviour
 
             case listeChoix.RANDOM:
 
-                agentJ2 = new RandomAgent();
+                agentJ2 = new RandomAgent
+                {
+                    rdm = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(0, 100))
+                }; 
                 break;
 
             case listeChoix.RANDOMROLLOUT:
@@ -146,12 +151,12 @@ public class GameSystemScript : MonoBehaviour
             if (gs.isPaused == false)
             {
                 gs.isPaused = true;
-                //IMS.Pause(gs.isPaused);
+                IMS.Pause(gs.isPaused);
             }
             else
             {
                 gs.isPaused = false;
-                //IMS.Pause(gs.isPaused);
+                IMS.Pause(gs.isPaused);
             }
         }
 

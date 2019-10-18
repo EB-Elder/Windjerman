@@ -49,19 +49,6 @@ public class InterfaceManagerScript : MonoBehaviour
         choix2.onClick.AddListener(ChangeAgent2);
     }
 
-    public void Pause(bool etat)
-    {
-        //si le jeu est en pause
-        if(etat)
-        {
-            pause.gameObject.SetActive(true);
-        }
-        else
-        {
-            pause.gameObject.SetActive(false);
-        }
-    }
-
     public void UpdateTimer(int nbSecRestante)
     {
         timer.text = nbSecRestante.ToString();
@@ -101,6 +88,19 @@ public class InterfaceManagerScript : MonoBehaviour
     public void UpdateScore(int scoreJ1 , int scoreJ2)
     {
         score.text = (scoreJ1 + " - " + scoreJ2);
+    }
+
+    //fonction de mise en pause
+    public void Pause(bool etat)
+    {
+        if(etat)
+        {
+            pause.gameObject.SetActive(true);
+        }
+        else
+        {
+            pause.gameObject.SetActive(false);
+        }
     }
 
     public void FinDePartie()
@@ -184,6 +184,7 @@ public class InterfaceManagerScript : MonoBehaviour
     {
         switch (choix2Value)
         {
+
             case listeChoix.HUMAN:
 
                 textButtonChoix2.text = "RANDOM";
