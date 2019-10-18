@@ -123,13 +123,14 @@ public class GameSystemScript : MonoBehaviour
     //gestion du timer
     public IEnumerator TimerGame(int nbSec)
     {
-        for(int i = 0; i < nbSec; i++)
+        for(int i = 0; i < nbSec+1; i++)
         {
             yield return new WaitForSeconds(1);
             IMS.UpdateTimer(nbSec - i);
         }
 
         gs.isGameOver = true;
+        IMS.FinDePartie();
     }
 
     // Update is called once per frame
