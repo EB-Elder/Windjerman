@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 using Rules = WindjermanGameStateRules;
 
-public struct NodeAStar
+/*public struct NodeAStar
 {
     
     public WindjermanGameState gsNode;
@@ -254,4 +254,4 @@ public class AAgentScript : IAgent
 
         return 0;
     }
-}
+}*/

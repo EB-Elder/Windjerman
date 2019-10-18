@@ -29,5 +29,7 @@ public struct WindjermanGameState
     public bool isFreeze2;
     public bool isStun1; //Touché par une bebom
     public bool isStun2;
+    public IAgent agentJ1;
+    public IAgent agentJ2;
     
 }

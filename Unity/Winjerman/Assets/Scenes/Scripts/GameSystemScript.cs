@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rules = WindjermanGameStateRules;
+using Spawn = SpawnSystem;
 public class GameSystemScript : MonoBehaviour
 {
     public GameObject PlayerPrefab1;
@@ -110,6 +111,9 @@ public class GameSystemScript : MonoBehaviour
         }
 
         gameStarted = true;
+        gs.agentJ1 = agentJ1;
+        gs.agentJ2 = agentJ2;
+
     }
 
 
@@ -124,7 +128,7 @@ public class GameSystemScript : MonoBehaviour
         if (!gameStarted) return;
 
         //echap pour mettre le jeu en pause
-        if (Input.GetKeyDown(KeyCode.Escape))
+        /*if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (gs.isPaused == false)
             {
@@ -136,7 +140,7 @@ public class GameSystemScript : MonoBehaviour
                 gs.isPaused = false;
                 IMS.Pause(gs.isPaused);
             }
-        }
+        }*/
 
         if (gs.isPaused) return;
 
@@ -146,9 +150,6 @@ public class GameSystemScript : MonoBehaviour
             IMS.FinDePartie();
             gs.isGameOver = true;
         }
-        PlayerView1.position = gs.playerPosition1;
-        PlayerView2.position = gs.playerPosition2;
-        frisbeeView.position = gs.frisbeePosition;
-        Rules.Step(ref gs, agentJ1.Act(ref gs, Rules.GetAvailableActions1(ref gs)), agentJ2.Act(ref gs, Rules.GetAvailableActions2(ref gs)));
+       
     }
 }

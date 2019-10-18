@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5527814532795330480}
   - component: {fileID: 4253896594374087483}
   - component: {fileID: 7194096779930767170}
+  - component: {fileID: 26988426228877154}
   m_Layer: 0
   m_Name: PlayerPrefabs1
   m_TagString: Untagged
@@ -78,3 +79,15 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &26988426228877154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639533643789911252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedf2d4414391874691f3689d6d491fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
